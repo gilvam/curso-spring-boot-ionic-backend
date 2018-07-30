@@ -1,5 +1,7 @@
 package com.gilvam.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class Product implements Serializable {
 	private String name;
 	private Double value;
 
+
+	@JsonBackReference //os objetos são retornados apenas 1 vez e na associação @JsonManagedReference e sem realizar loop
 	@ManyToMany
 	@JoinTable(name = "product_category",
 			joinColumns = @JoinColumn(name = "product_id"),
