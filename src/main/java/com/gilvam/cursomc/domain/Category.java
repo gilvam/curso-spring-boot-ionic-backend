@@ -16,14 +16,14 @@ public class Category implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	private String nome;
+	private String name;
 
 	public Category() {
 	}
 
-	public Category(Integer id, String nome) {
+	public Category(Integer id, String name) {
 		this.id = id;
-		this.nome = nome;
+		this.name = name;
 	}
 
 	public Integer getId() {
@@ -35,11 +35,11 @@ public class Category implements Serializable {
 	}
 
 	public String getNome() {
-		return nome;
+		return name;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNome(String name) {
+		this.name = name;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class Category implements Serializable {
 	public String toString() {
 		return "Category{" +
 				"id=" + id +
-				", nome='" + nome + '\'' +
+				", name='" + name + '\'' +
 				'}';
 	}
 }
