@@ -1,13 +1,8 @@
 package com.gilvam.cursomc;
 
-import com.gilvam.cursomc.domain.Category;
-import com.gilvam.cursomc.domain.City;
-import com.gilvam.cursomc.domain.Product;
-import com.gilvam.cursomc.domain.State;
-import com.gilvam.cursomc.repositories.CategoryRepository;
-import com.gilvam.cursomc.repositories.CityRepository;
-import com.gilvam.cursomc.repositories.ProductRepository;
-import com.gilvam.cursomc.repositories.StateRepository;
+import com.gilvam.cursomc.domain.*;
+import com.gilvam.cursomc.enums.TypeClient;
+import com.gilvam.cursomc.repositories.*;
 import com.gilvam.cursomc.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -32,6 +27,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private CityRepository cityRepository;
+
+	@Autowired
+	private ClientRepository clientRepository;
+
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -66,11 +67,23 @@ public class CursomcApplication implements CommandLineRunner {
 		City city2 = new City(null, "Uberlândia", state2);
 		City city3 = new City(null, "Campinas", state2);
 
-		//state1.getCities().addAll(Arrays.asList(city1));
-		//state2.getCities().addAll(Arrays.asList(city2, city3));
+		state1.getCities().addAll(Arrays.asList(city1));
+		state2.getCities().addAll(Arrays.asList(city2, city3));
 
 		this.stateRepository.saveAll(Arrays.asList(state1, state2));
 		this.cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+
+
+
+		Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", TypeClient.PERSONINDIVIDUAL);
+		client1.getPhones().addAll(Arrays.asList("27363323", "9338393"));
+
+		Address address1 = new Address(null, "Rua Flores", 300, "Apto 303", "Jardim", "38220834", client1, city1);
+		Address address2 = new Address(null, "Avenida Matos", 105, "Sala 800", "Centro", "38777012", client1, city2);
+		client1.getAddresses().addAll(Arrays.asList(address1, address2));
+
+		this.clientRepository.save(client1);
+		this.addressRepository.saveAll(Arrays.asList(address1, address2));
 
 	}
 }
