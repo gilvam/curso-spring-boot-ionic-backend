@@ -1,9 +1,13 @@
 package com.gilvam.cursomc;
 
 import com.gilvam.cursomc.domain.Category;
+import com.gilvam.cursomc.domain.City;
 import com.gilvam.cursomc.domain.Product;
+import com.gilvam.cursomc.domain.State;
 import com.gilvam.cursomc.repositories.CategoryRepository;
+import com.gilvam.cursomc.repositories.CityRepository;
 import com.gilvam.cursomc.repositories.ProductRepository;
+import com.gilvam.cursomc.repositories.StateRepository;
 import com.gilvam.cursomc.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -22,6 +26,12 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private StateRepository stateRepository;
+
+	@Autowired
+	private CityRepository cityRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -47,6 +57,20 @@ public class CursomcApplication implements CommandLineRunner {
 
 		this.categoryRepository.saveAll(Arrays.asList(cat1, cat2));
 		this.productRepository.saveAll(Arrays.asList(p1, p2, p3));
+
+
+
+		State state1 = new State(null, "Minas Gerais");
+		State state2 = new State(null, "São Paulo");
+		City city1 = new City(null, "Uberlândia", state1);
+		City city2 = new City(null, "Uberlândia", state2);
+		City city3 = new City(null, "Campinas", state2);
+
+		//state1.getCities().addAll(Arrays.asList(city1));
+		//state2.getCities().addAll(Arrays.asList(city2, city3));
+
+		this.stateRepository.saveAll(Arrays.asList(state1, state2));
+		this.cityRepository.saveAll(Arrays.asList(city1, city2, city3));
 
 	}
 }
