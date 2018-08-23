@@ -1,5 +1,6 @@
 package com.gilvam.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gilvam.cursomc.enums.TypeClient;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Client implements Serializable {
 
 	private Integer typeClient;
 
+	@JsonManagedReference //gerenciado pelo json. Venha os objetos associados. | Pode serealizar o list addresses
 	@OneToMany(mappedBy = "client")// state foi quem mapeou
 	private List<Address> addresses= new ArrayList<>();
 

@@ -1,5 +1,7 @@
 package com.gilvam.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -16,6 +18,8 @@ public class State implements Serializable {
 
 	private String name;
 
+	@JsonBackReference
+	//os objetos são retornados apenas 1 vez e na associação @JsonManagedReference e sem realizar loop. | Não pode serealizar o list cities
 	@OneToMany(mappedBy = "state")// state foi quem mapeou
 	private List<City> cities = new ArrayList<>();
 
