@@ -1,6 +1,7 @@
 package com.gilvam.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,13 +18,14 @@ public class Product implements Serializable {
 	private Double value;
 
 
-	@JsonBackReference //os objetos são retornados apenas 1 vez e na associação @JsonManagedReference e sem realizar loop. | Não pode serealizar o list categories
+	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o list categories
 	@ManyToMany
 	@JoinTable(name = "product_category",
 			joinColumns = @JoinColumn(name = "product_id"),
 			inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private List<Category> categories = new ArrayList<>();
 
+	@JsonIgnore
 	@OneToMany(mappedBy = "id.product")
 	private Set<ItemOrder> itens = new HashSet<>(); //set ajuda a não repetir um item dentro da hashSet
 
@@ -35,6 +37,7 @@ public class Product implements Serializable {
 		this.value = value;
 	}
 
+	@JsonIgnore
 	public List<Order> getOrders(){
 		List<Order> orders = new ArrayList<>();
 		for(ItemOrder io: itens){

@@ -18,8 +18,7 @@ public class State implements Serializable {
 
 	private String name;
 
-	@JsonBackReference
-	//os objetos são retornados apenas 1 vez e na associação @JsonManagedReference e sem realizar loop. | Não pode serealizar o list cities
+	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o list cities
 	@OneToMany(mappedBy = "state")// state foi quem mapeou
 	private List<City> cities = new ArrayList<>();
 

@@ -1,5 +1,6 @@
 package com.gilvam.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.gilvam.cursomc.enums.PaymentStatus;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public abstract class Payment implements Serializable {
 	private Integer id;
 	private Integer status;
 
+	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o objeto order
 	@OneToOne
 	@JoinColumn(name = "order_id")
 	@MapsId

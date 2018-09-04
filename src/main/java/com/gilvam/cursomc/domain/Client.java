@@ -1,5 +1,6 @@
 package com.gilvam.cursomc.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.gilvam.cursomc.enums.TypeClient;
 
@@ -28,6 +29,7 @@ public class Client implements Serializable {
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 
+	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o list orders
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 
