@@ -34,6 +34,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private OrderRepository orderRepository;
 	@Autowired
 	private PaymentRepository paymentRepository;
+	@Autowired
+	private ItemOrderRepository itemOrderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -45,19 +47,19 @@ public class CursomcApplication implements CommandLineRunner {
 		Category cat1 = new Category("information technology");
 		Category cat2 = new Category("Office");
 
-		Product p1 = new Product("Computer", 2000.00);
-		Product p2 = new Product("Printer", 800.00);
-		Product p3 = new Product("Mouse", 80.00);
+		Product product1 = new Product("Computer", 2000.00);
+		Product product2 = new Product("Printer", 800.00);
+		Product product3 = new Product("Mouse", 80.00);
 
-		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
-		cat2.getProducts().addAll(Arrays.asList(p2));
+		cat1.getProducts().addAll(Arrays.asList(product1, product2, product3));
+		cat2.getProducts().addAll(Arrays.asList(product2));
 
-		p1.getCategories().addAll(Arrays.asList(cat1));
-		p2.getCategories().addAll(Arrays.asList(cat1, cat2));
-		p3.getCategories().addAll(Arrays.asList(cat1));
+		product1.getCategories().addAll(Arrays.asList(cat1));
+		product2.getCategories().addAll(Arrays.asList(cat1, cat2));
+		product3.getCategories().addAll(Arrays.asList(cat1));
 
 		this.categoryRepository.saveAll(Arrays.asList(cat1, cat2));
-		this.productRepository.saveAll(Arrays.asList(p1, p2, p3));
+		this.productRepository.saveAll(Arrays.asList(product1, product2, product3));
 
 
 
@@ -102,5 +104,20 @@ public class CursomcApplication implements CommandLineRunner {
 
 		orderRepository.saveAll(Arrays.asList(order1, order2));
 		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+
+
+
+		ItemOrder itemOrder1 = new ItemOrder(order1, product1, 0.00, 1, 2000.00);
+		ItemOrder itemOrder2 = new ItemOrder(order1, product3, 0.00, 2, 80.00);
+		ItemOrder itemOrder3 = new ItemOrder(order2, product2, 100.00, 1, 800.00);
+
+		order1.getItens().addAll(Arrays.asList(itemOrder1, itemOrder2));
+		order2.getItens().addAll(Arrays.asList(itemOrder3));
+
+		product1.getItens().addAll(Arrays.asList(itemOrder1));
+		product2.getItens().addAll(Arrays.asList(itemOrder3));
+		product3.getItens().addAll(Arrays.asList(itemOrder2));
+
+		itemOrderRepository.saveAll(Arrays.asList(itemOrder1, itemOrder2, itemOrder3));
 	}
 }

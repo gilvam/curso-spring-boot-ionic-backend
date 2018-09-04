@@ -3,9 +3,11 @@ package com.gilvam.cursomc.domain;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "order_client") // nome da table diferente pois "order" não pode ser utilizado
+@Table(name = "order_tb") // nome da table diferente pois "order" não pode ser utilizado
 public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -24,6 +26,9 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "address_delivery_id")
 	private Address addressDelivery;
+
+	@OneToMany(mappedBy = "id.order")
+	private Set<ItemOrder> itens = new HashSet<>(); //set ajuda a não repetir um item dentro da hashSet
 
 	public Order() {
 	}
@@ -74,6 +79,14 @@ public class Order implements Serializable {
 
 	public void setAddressDelivery(Address addressDelivery) {
 		this.addressDelivery = addressDelivery;
+	}
+
+	public Set<ItemOrder> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemOrder> itens) {
+		this.itens = itens;
 	}
 
 	@Override
