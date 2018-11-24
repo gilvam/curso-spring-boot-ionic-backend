@@ -1,6 +1,7 @@
 package com.gilvam.cursomc.resources;
 
 import com.gilvam.cursomc.domain.Category;
+import com.gilvam.cursomc.dto.CategoryDTO;
 import com.gilvam.cursomc.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -46,5 +49,12 @@ public class CategoryResource {
     public ResponseEntity<Void> delete(@PathVariable Integer id) {
         this.categoryService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<Category> categories = this.categoryService.findAll();
+        List<CategoryDTO> categoryDTOList =  categories.stream().map(item -> new CategoryDTO(item)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(categoryDTOList);
     }
 }
