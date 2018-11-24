@@ -1,6 +1,6 @@
 package com.gilvam.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +19,7 @@ public class Address implements Serializable {
 	private String district;
 	private String zipCode;
 
-	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o objeto client
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="client_id")//mapeando usando id do estado
 	private Client client;

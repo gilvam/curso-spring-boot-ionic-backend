@@ -1,8 +1,5 @@
 package com.gilvam.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.annotation.processing.Generated;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -18,7 +15,6 @@ public class Category implements Serializable {
 	private Integer id;
 	private String name;
 
-	@JsonManagedReference //gerenciado pelo json. Venha os objetos associados. | Pode serealizar o list products
 	@ManyToMany(mappedBy = "categories")
 	private List<Product> products = new ArrayList<>();
 

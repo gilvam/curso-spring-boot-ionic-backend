@@ -1,12 +1,14 @@
 package com.gilvam.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gilvam.cursomc.enums.TypeClient;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -21,7 +23,7 @@ public class Client implements Serializable {
 	private String cpfOrCnpj;
 	private Integer type;
 
-	@JsonManagedReference
+	// @JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Address> addresses = new ArrayList<>();
 
@@ -29,7 +31,7 @@ public class Client implements Serializable {
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 
-	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o list orders
+	@JsonIgnore
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 

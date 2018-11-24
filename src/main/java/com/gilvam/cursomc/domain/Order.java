@@ -1,6 +1,7 @@
 package com.gilvam.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
@@ -21,11 +22,9 @@ public class Order implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date instante;
 
-	@JsonManagedReference //gerenciado pelo json. Venha os objetos associados. | Pode serealizar o objeto payment
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 
-	@JsonManagedReference //gerenciado pelo json. Venha os objetos associados. | Pode serealizar o objeto client
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;

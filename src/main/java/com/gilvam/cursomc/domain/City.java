@@ -1,7 +1,5 @@
 package com.gilvam.cursomc.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,7 +14,6 @@ public class City implements Serializable {
 
 	private String name;
 
-	@JsonManagedReference //gerenciado pelo json. Venha os objetos associados. | Pode serealizar o objeto state
 	@ManyToOne
 	@JoinColumn(name="state_id")//mapeando usando id do estado
 	private State state;

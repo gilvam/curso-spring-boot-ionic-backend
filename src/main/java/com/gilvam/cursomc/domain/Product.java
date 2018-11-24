@@ -18,7 +18,7 @@ public class Product implements Serializable {
 	private Double value;
 
 
-	@JsonBackReference //objetos são retornados 1 vez e na associação @JsonManagedReference sem realizar loop. Não pode serealizar o list categories
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "product_category",
 			joinColumns = @JoinColumn(name = "product_id"),
