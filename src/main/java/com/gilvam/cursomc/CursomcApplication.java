@@ -4,16 +4,13 @@ import com.gilvam.cursomc.domain.*;
 import com.gilvam.cursomc.enums.PaymentStatus;
 import com.gilvam.cursomc.enums.TypeClient;
 import com.gilvam.cursomc.repositories.*;
-import com.gilvam.cursomc.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
 public class CursomcApplication implements CommandLineRunner {

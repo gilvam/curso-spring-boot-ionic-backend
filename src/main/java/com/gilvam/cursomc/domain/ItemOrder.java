@@ -2,9 +2,9 @@ package com.gilvam.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.*;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
