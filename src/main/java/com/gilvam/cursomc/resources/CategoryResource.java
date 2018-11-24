@@ -23,7 +23,7 @@ public class CategoryResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(Category category) {
+    public ResponseEntity<Void> insert(@RequestBody Category category) {
         category = this.categoryService.insert(category);
 
         /** HTTP status code, deve retornar:
@@ -39,6 +39,12 @@ public class CategoryResource {
     public ResponseEntity<Void> update(@RequestBody Category category, @PathVariable Integer id) {
         category.setId(id);
         category = this.categoryService.update(category);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
+        this.categoryService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
