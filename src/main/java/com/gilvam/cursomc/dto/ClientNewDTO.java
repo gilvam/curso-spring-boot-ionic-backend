@@ -1,35 +1,57 @@
 package com.gilvam.cursomc.dto;
-
-import com.gilvam.cursomc.domain.Client;
+import com.gilvam.cursomc.services.validation.CustomValidationClientInsert;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
+@CustomValidationClientInsert
 public class ClientNewDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //client
+    @NotEmpty(message = "Preenchimento obrigatório")
+    @Length(min = 5, max = 120, message = "O tamanho deve ser entre 5 e 120 caracteres")
     private String name;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
+    @Email(message = "Email inválido")
     private String email;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String cpfOrCnpj;
+
     private Integer type;
 
+
     //address
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String addressName;
+
+    @NotNull(message = "Preenchimento obrigatório")
     private Integer addressNumber;
+
     private String addressComplement;
     private String addressDistrict;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String addressZipCode;
 
+
     //phones
+    @NotEmpty(message = "Preenchimento obrigatório")
     private String phone1;
+
     private String phone2;
     private String phone3;
 
+
     //city
     private Integer cityId;
+
 
     public ClientNewDTO() {
     }

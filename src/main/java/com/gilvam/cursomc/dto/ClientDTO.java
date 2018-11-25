@@ -1,13 +1,14 @@
 package com.gilvam.cursomc.dto;
 
-import com.gilvam.cursomc.domain.Category;
 import com.gilvam.cursomc.domain.Client;
+import com.gilvam.cursomc.services.validation.CustomValidationClientInsert;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
+//@CustomValidationClientInsert
 public class ClientDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 

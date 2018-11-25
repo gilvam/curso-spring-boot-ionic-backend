@@ -2,8 +2,8 @@ package com.gilvam.cursomc.enums;
 
 public enum TypeClient {
 
-	PERSONINDIVIDUAL(1, "individual person"), //pessoa fisica
-	PERSONCORPORATION(2, "corporation person"); //pessoa juridica
+	PERSONINDIVIDUAL(1, "pessoa física"),
+	PERSONCORPORATION(2, "pessoa jurídica");
 
 	private int cod;
 	private String description;
