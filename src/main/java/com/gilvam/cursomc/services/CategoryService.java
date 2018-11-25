@@ -1,6 +1,7 @@
 package com.gilvam.cursomc.services;
 
 import com.gilvam.cursomc.domain.Category;
+import com.gilvam.cursomc.dto.CategoryDTO;
 import com.gilvam.cursomc.repositories.CategoryRepository;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
@@ -53,5 +54,9 @@ public class CategoryService {
 	public Page<Category> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction), orderBy);
 		return this.repo.findAll(pageRequest);
+	}
+
+	public Category fromDTO(CategoryDTO objDto) {
+		return new Category(objDto.getId(), objDto.getName());
 	}
 }

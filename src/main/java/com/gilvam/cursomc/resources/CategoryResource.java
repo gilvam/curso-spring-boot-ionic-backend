@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,8 @@ public class CategoryResource {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Category category) {
+    public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO categoryDto) {
+        Category category = this.categoryService.fromDTO(categoryDto);
         category = this.categoryService.insert(category);
 
         /** HTTP status code, deve retornar:
@@ -40,7 +42,8 @@ public class CategoryResource {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody Category category, @PathVariable Integer id) {
+    public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO categoryDto, @PathVariable Integer id) {
+        Category category = this.categoryService.fromDTO(categoryDto);
         category.setId(id);
         category = this.categoryService.update(category);
         return ResponseEntity.noContent().build();
