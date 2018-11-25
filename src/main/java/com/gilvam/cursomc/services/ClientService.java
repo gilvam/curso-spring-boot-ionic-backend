@@ -1,7 +1,13 @@
 package com.gilvam.cursomc.services;
 
+import com.gilvam.cursomc.domain.Address;
+import com.gilvam.cursomc.domain.City;
 import com.gilvam.cursomc.domain.Client;
 import com.gilvam.cursomc.dto.ClientDTO;
+import com.gilvam.cursomc.dto.ClientNewDTO;
+import com.gilvam.cursomc.enums.TypeClient;
+import com.gilvam.cursomc.repositories.AddressRepository;
+import com.gilvam.cursomc.repositories.CityRepository;
 import com.gilvam.cursomc.repositories.ClientRepository;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
@@ -21,16 +27,25 @@ public class ClientService {
     @Autowired
     private ClientRepository repo;
 
+    @Autowired
+    private CityRepository cityRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
+
     public Client find(Integer id) {
         Optional<Client> opt = this.repo.findById(id);
         return opt.orElseThrow(() -> new ObjectNotFoundException(
                 "Object not found! Id: " + id + ", Type: " + Client.class.getName()));
     }
 
-//	public Client insert(Client client) {
-//		client.setId(null);
-//		return this.repo.save(client);
-//	}
+    public Client insert(Client client) {
+        client.setId(null);
+        client = this.repo.save(client);
+        this.addressRepository.saveAll(client.getAddresses());
+
+        return client;
+    }
 
     public Client update(Client client) {
         Client clientNew = this.find(client.getId());
@@ -56,11 +71,29 @@ public class ClientService {
         return this.repo.findAll(pageRequest);
     }
 
-    public Client fromDTO(ClientDTO objDto) {
-        return new Client(objDto.getId(), objDto.getName(), objDto.getEmail(), null, null);
+    public Client fromDTO(ClientDTO dto) {
+        return new Client(dto.getId(), dto.getName(), dto.getEmail(), null, null);
     }
 
-    private void updateData(Client clientNew, Client client){
+    public Client fromDTO(ClientNewDTO dto) {
+        Client client = new Client(null, dto.getName(), dto.getEmail(), dto.getCpfOrCnpj(), TypeClient.toEnum(dto.getType()));
+        Optional<City> city = this.cityRepository.findById(dto.getCityId());
+
+        Address address = new Address(null, dto.getAddressName(), dto.getAddressNumber(), dto.getAddressComplement(), dto.getAddressDistrict(), dto.getAddressZipCode(), client, city.get());
+
+        client.getAddresses().add(address);
+        client.getPhones().add(dto.getPhone1());
+
+        if (dto.getPhone2() != null) {
+            client.getPhones().add(dto.getPhone2());
+        }
+        if (dto.getPhone3() != null) {
+            client.getPhones().add(dto.getPhone3());
+        }
+        return client;
+    }
+
+    private void updateData(Client clientNew, Client client) {
         clientNew.setName(client.getName());
         clientNew.setEmail(client.getEmail());
     }
