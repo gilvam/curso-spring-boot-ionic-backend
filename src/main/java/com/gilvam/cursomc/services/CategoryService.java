@@ -32,9 +32,10 @@ public class CategoryService {
 		return this.repo.save(category);
 	}
 
-	public Category update (Category category) {
-		this.find(category.getId());
-		return this.repo.save(category);
+	public Category update(Category category) {
+		Category categoryNew = this.find(category.getId());
+		this.updateData(categoryNew, category);
+		return this.repo.save(categoryNew);
 	}
 
 	public void delete (Integer id) {
@@ -58,5 +59,9 @@ public class CategoryService {
 
 	public Category fromDTO(CategoryDTO objDto) {
 		return new Category(objDto.getId(), objDto.getName());
+	}
+
+	private void updateData(Category categoryNew, Category category){
+		categoryNew.setName(category.getName());
 	}
 }

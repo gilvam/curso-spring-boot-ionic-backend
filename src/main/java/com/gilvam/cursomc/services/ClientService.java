@@ -34,7 +34,7 @@ public class ClientService {
 
     public Client update(Client client) {
         Client clientNew = this.find(client.getId());
-        updateData(clientNew, client);
+        this.updateData(clientNew, client);
         return this.repo.save(clientNew);
     }
 
