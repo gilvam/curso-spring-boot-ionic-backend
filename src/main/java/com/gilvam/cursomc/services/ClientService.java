@@ -7,7 +7,6 @@ import com.gilvam.cursomc.dto.ClientDTO;
 import com.gilvam.cursomc.dto.ClientNewDTO;
 import com.gilvam.cursomc.enums.TypeClient;
 import com.gilvam.cursomc.repositories.AddressRepository;
-import com.gilvam.cursomc.repositories.CityRepository;
 import com.gilvam.cursomc.repositories.ClientRepository;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +28,6 @@ public class ClientService {
     private ClientRepository repo;
 
     @Autowired
-    private CityRepository cityRepository;
-
-    @Autowired
     private AddressRepository addressRepository;
 
     public Client find(Integer id) {
@@ -39,11 +36,11 @@ public class ClientService {
                 "Object not found! Id: " + id + ", Type: " + Client.class.getName()));
     }
 
+    @Transactional // garante que vai salvar tanto os clientes quanto os endereços na mesma transação no banco de dados
     public Client insert(Client client) {
         client.setId(null);
         client = this.repo.save(client);
         this.addressRepository.saveAll(client.getAddresses());
-
         return client;
     }
 
@@ -77,9 +74,9 @@ public class ClientService {
 
     public Client fromDTO(ClientNewDTO dto) {
         Client client = new Client(null, dto.getName(), dto.getEmail(), dto.getCpfOrCnpj(), TypeClient.toEnum(dto.getType()));
-        Optional<City> city = this.cityRepository.findById(dto.getCityId());
+        City city = new City(dto.getCityId(), null, null);
 
-        Address address = new Address(null, dto.getAddressName(), dto.getAddressNumber(), dto.getAddressComplement(), dto.getAddressDistrict(), dto.getAddressZipCode(), client, city.get());
+        Address address = new Address(null, dto.getAddressName(), dto.getAddressNumber(), dto.getAddressComplement(), dto.getAddressDistrict(), dto.getAddressZipCode(), client, city);
 
         client.getAddresses().add(address);
         client.getPhones().add(dto.getPhone1());
