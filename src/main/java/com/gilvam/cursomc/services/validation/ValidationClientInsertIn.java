@@ -14,15 +14,15 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 /**
- * Validator personalizado para a anotação CustomValidationClientInsert
+ * Validator personalizado para a anotação ValidationClientInsert
  */
-public class ClientInsertValidator implements ConstraintValidator<CustomValidationClientInsert, ClientNewDTO> {
+public class ValidationClientInsertIn implements ConstraintValidator<ValidationClientInsert, ClientNewDTO> {
 
     @Autowired
     private ClientRepository clientRepository;
 
     @Override
-    public void initialize(CustomValidationClientInsert ann) {
+    public void initialize(ValidationClientInsert ann) {
     }
 
     @Override

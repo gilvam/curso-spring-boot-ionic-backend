@@ -10,10 +10,10 @@ import javax.validation.Payload;
 /**
  * Anotação customizada para inserção de um Client
  */
-@Constraint(validatedBy = ClientInsertValidator.class)
+@Constraint(validatedBy = ValidationClientInsertIn.class)
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CustomValidationClientInsert {
+public @interface ValidationClientInsert {
     String message() default "Erro de validação";
 
     Class<?>[] groups() default {};
