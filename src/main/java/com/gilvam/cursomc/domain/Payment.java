@@ -1,14 +1,16 @@
 package com.gilvam.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.gilvam.cursomc.enums.PaymentStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+//usar estratégia de ter as 2 classes em 1 tabela (PaymentBankSlip e PaymentCreditCard)
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-//usar estratégia de ter as 2 classes em 1 tabela (PaymentBankSlip e PaymentCreditCard)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type") // campo adicional @type
 public abstract class Payment implements Serializable {
     private static final long serialVersionUID = 1L;
 
