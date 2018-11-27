@@ -41,7 +41,7 @@ public class CursomcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Category cat1 = new Category(null, "information technology");
+		Category cat1 = new Category(null, "Informática");
 		Category cat2 = new Category(null, "Escritório");
 		Category cat3 = new Category(null, "Cama mesa e banho");
 		Category cat4 = new Category(null, "Eletrônicos");
@@ -49,77 +49,92 @@ public class CursomcApplication implements CommandLineRunner {
 		Category cat6 = new Category(null, "Decoração");
 		Category cat7 = new Category(null, "Perfumaria");
 
-		Product product1 = new Product("Computer", 2000.00);
-		Product product2 = new Product("Printer", 800.00);
-		Product product3 = new Product("Mouse", 80.00);
+		Product p1 = new Product(null, "Computador", 2000.00);
+		Product p2 = new Product(null, "Impressora", 800.00);
+		Product p3 = new Product(null, "Mouse", 80.00);
+		Product p4 = new Product(null, "Mesa de escritório", 300.00);
+		Product p5 = new Product(null, "Toalha", 50.00);
+		Product p6 = new Product(null, "Colcha", 200.00);
+		Product p7 = new Product(null, "TV true color", 1200.00);
+		Product p8 = new Product(null, "Roçadeira", 800.00);
+		Product p9 = new Product(null, "Abajour", 100.00);
+		Product p10 = new Product(null, "Pendente", 180.00);
+		Product p11 = new Product(null, "Shampoo", 90.00);
 
-		cat1.getProducts().addAll(Arrays.asList(product1, product2, product3));
-		cat2.getProducts().addAll(Arrays.asList(product2));
+		cat1.getProducts().addAll(Arrays.asList(p1, p2, p3));
+		cat2.getProducts().addAll(Arrays.asList(p2, p4));
+		cat3.getProducts().addAll(Arrays.asList(p5, p6));
+		cat4.getProducts().addAll(Arrays.asList(p1, p2, p3, p7));
+		cat5.getProducts().addAll(Arrays.asList(p8));
+		cat6.getProducts().addAll(Arrays.asList(p9, p10));
+		cat7.getProducts().addAll(Arrays.asList(p11));
 
-		product1.getCategories().addAll(Arrays.asList(cat1));
-		product2.getCategories().addAll(Arrays.asList(cat1, cat2));
-		product3.getCategories().addAll(Arrays.asList(cat1));
+		p1.getCategories().addAll(Arrays.asList(cat1, cat4));
+		p2.getCategories().addAll(Arrays.asList(cat1, cat2, cat4));
+		p3.getCategories().addAll(Arrays.asList(cat1, cat4));
+		p4.getCategories().addAll(Arrays.asList(cat2));
+		p5.getCategories().addAll(Arrays.asList(cat3));
+		p6.getCategories().addAll(Arrays.asList(cat3));
+		p7.getCategories().addAll(Arrays.asList(cat4));
+		p8.getCategories().addAll(Arrays.asList(cat5));
+		p9.getCategories().addAll(Arrays.asList(cat6));
+		p10.getCategories().addAll(Arrays.asList(cat6));
+		p11.getCategories().addAll(Arrays.asList(cat7));
 
 		this.categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
-		this.productRepository.saveAll(Arrays.asList(product1, product2, product3));
+		this.productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11));
 
+		State est1 = new State(null, "Minas Gerais");
+		State est2 = new State(null, "São Paulo");
 
+		City c1 = new City(null, "Uberlândia", est1);
+		City c2 = new City(null, "São Paulo", est2);
+		City c3 = new City(null, "Campinas", est2);
 
-		State state1 = new State(null, "Minas Gerais");
-		State state2 = new State(null, "São Paulo");
-		City city1 = new City(null, "Uberlândia", state1);
-		City city2 = new City(null, "Uberlândia", state2);
-		City city3 = new City(null, "Campinas", state2);
+		est1.getCities().addAll(Arrays.asList(c1));
+		est2.getCities().addAll(Arrays.asList(c2, c3));
 
-		state1.getCities().addAll(Arrays.asList(city1));
-		state2.getCities().addAll(Arrays.asList(city2, city3));
+		this.stateRepository.saveAll(Arrays.asList(est1, est2));
+		this.cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-		this.stateRepository.saveAll(Arrays.asList(state1, state2));
-		this.cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", TypeClient.PERSONINDIVIDUAL);
 
+		cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+		Address e1 = new Address(null, "Rua Flores", 300, "Apto 303", "Jardim", "38220834", cli1, c1);
+		Address e2 = new Address(null, "Avenida Matos", 105, "Sala 800", "Centro", "38777012", cli1, c2);
 
+		cli1.getAddresses().addAll(Arrays.asList(e1, e2));
 
-		Client client1 = new Client(null, "Maria Silva", "maria@gmail.com", "36378912377", TypeClient.PERSONINDIVIDUAL);
-		client1.getPhones().addAll(Arrays.asList("27363323", "9338393"));
+		this.clientRepository.saveAll(Arrays.asList(cli1));
+		this.addressRepository.saveAll(Arrays.asList(e1, e2));
 
-		Address address1 = new Address(null, "Rua Flores", 300, "Apto 303", "Jardim", "38220834", client1, city1);
-		Address address2 = new Address(null, "Avenida Matos", 105, "Sala 800", "Centro", "38777012", client1, city2);
-		client1.getAddresses().addAll(Arrays.asList(address1, address2));
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 
-		this.clientRepository.save(client1);
-		this.addressRepository.saveAll(Arrays.asList(address1, address2));
+		Order ped1 = new Order(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
+		Order ped2 = new Order(null, sdf.parse("10/10/2017 19:35"), cli1, e2);
 
+		Payment pagto1 = new PaymentCreditCard(null, PaymentStatus.PAID, ped1, 6);
+		ped1.setPayment(pagto1);
 
+		Payment pagto2 = new PaymentBankSlip(null, PaymentStatus.PENDING, ped2, sdf.parse("20/10/2017 00:00"), null);
+		ped2.setPayment(pagto2);
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		cli1.getOrders().addAll(Arrays.asList(ped1, ped2));
 
-		Order order1 = new Order(null, sdf.parse("30/09/2017 10:32"), client1, address1);
-		Order order2 = new Order(null, sdf.parse("10/10/2017 19:35"), client1, address2);
+		this.orderRepository.saveAll(Arrays.asList(ped1, ped2));
+		this.paymentRepository.saveAll(Arrays.asList(pagto1, pagto2));
 
-		Payment pay1 = new PaymentCreditCard(null, PaymentStatus.PAID, order1, 6);
-		order1.setPayment(pay1);
+		ItemOrder ip1 = new ItemOrder(ped1, p1, 0.00, 1, 2000.00);
+		ItemOrder ip2 = new ItemOrder(ped1, p3, 0.00, 2, 80.00);
+		ItemOrder ip3 = new ItemOrder(ped2, p2, 100.00, 1, 800.00);
 
-		Payment pay2 = new PaymentBankSlip(null, PaymentStatus.PENDING, order2, sdf.parse("20/10/2017 00:00"), null);
-		order2.setPayment(pay2);
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
 
-		client1.getOrders().addAll(Arrays.asList(order1, order2));
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
 
-		orderRepository.saveAll(Arrays.asList(order1, order2));
-		paymentRepository.saveAll(Arrays.asList(pay1, pay2));
-
-
-
-		ItemOrder itemOrder1 = new ItemOrder(order1, product1, 0.00, 1, 2000.00);
-		ItemOrder itemOrder2 = new ItemOrder(order1, product3, 0.00, 2, 80.00);
-		ItemOrder itemOrder3 = new ItemOrder(order2, product2, 100.00, 1, 800.00);
-
-		order1.getItens().addAll(Arrays.asList(itemOrder1, itemOrder2));
-		order2.getItens().addAll(Arrays.asList(itemOrder3));
-
-		product1.getItens().addAll(Arrays.asList(itemOrder1));
-		product2.getItens().addAll(Arrays.asList(itemOrder3));
-		product3.getItens().addAll(Arrays.asList(itemOrder2));
-
-		itemOrderRepository.saveAll(Arrays.asList(itemOrder1, itemOrder2, itemOrder3));
+		this.itemOrderRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
 	}
 }
