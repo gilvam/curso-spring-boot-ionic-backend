@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "order_tb") // nome da table diferente pois "order" não pode ser utilizado
@@ -43,6 +44,10 @@ public class Order implements Serializable {
 		this.instante = instante;
 		this.client = client;
 		this.addressDelivery = addressDelivery;
+	}
+
+	public double getTotalAmount(){
+		return this.itens.stream().mapToDouble(itemOrder -> itemOrder.getSubTotal()).sum();
 	}
 
 	public Integer getId() {

@@ -9,78 +9,82 @@ import java.util.Objects;
 
 @Entity
 public class ItemOrder implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@JsonIgnore
-	@EmbeddedId //chave composta
-	private ItemOrderPK id = new ItemOrderPK();
+    @JsonIgnore
+    @EmbeddedId //chave composta
+    private ItemOrderPK id = new ItemOrderPK();
 
-	private Double discount;
-	private Integer amount;
-	private Double price;
+    private Double discount;
+    private Integer amount;
+    private Double price;
 
-	public ItemOrder() {
-	}
+    public ItemOrder() {
+    }
 
-	public ItemOrder(Order order, Product product, Double discount, Integer amount, Double price) {
-		id.setOrder(order);
-		id.setProduct(product);
-		this.discount = discount;
-		this.amount = amount;
-		this.price = price;
-	}
+    public ItemOrder(Order order, Product product, Double discount, Integer amount, Double price) {
+        id.setOrder(order);
+        id.setProduct(product);
+        this.discount = discount;
+        this.amount = amount;
+        this.price = price;
+    }
 
-	@JsonIgnore
-	public Order getOrder(){
-		return id.getOrder();
-	}
+    public double getSubTotal() {
+        return (this.price - this.discount) * this.amount;
+    }
 
-	public Product getProduct(){
-		return id.getProduct();
-	}
+    @JsonIgnore
+    public Order getOrder() {
+        return id.getOrder();
+    }
 
-	public ItemOrderPK getId() {
-		return id;
-	}
+    public Product getProduct() {
+        return id.getProduct();
+    }
 
-	public void setId(ItemOrderPK id) {
-		this.id = id;
-	}
+    public ItemOrderPK getId() {
+        return id;
+    }
 
-	public Double getDiscount() {
-		return discount;
-	}
+    public void setId(ItemOrderPK id) {
+        this.id = id;
+    }
 
-	public void setDiscount(Double discount) {
-		this.discount = discount;
-	}
+    public Double getDiscount() {
+        return discount;
+    }
 
-	public Integer getAmount() {
-		return amount;
-	}
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
-	}
+    public Integer getAmount() {
+        return amount;
+    }
 
-	public Double getPrice() {
-		return price;
-	}
+    public void setAmount(Integer amount) {
+        this.amount = amount;
+    }
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
+    public Double getPrice() {
+        return price;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof ItemOrder)) return false;
-		ItemOrder itemOrder = (ItemOrder) o;
-		return Objects.equals(getId(), itemOrder.getId());
-	}
+    public void setPrice(Double price) {
+        this.price = price;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(getId());
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ItemOrder)) return false;
+        ItemOrder itemOrder = (ItemOrder) o;
+        return Objects.equals(getId(), itemOrder.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
+    }
 }
