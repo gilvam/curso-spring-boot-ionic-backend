@@ -130,9 +130,8 @@ public class Order implements Serializable {
 	public String toString() {
 		NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
-		final StringBuffer
-//				sb = new StringBuffer("Order{");
-				sb = new StringBuffer();
+		final StringBuffer sb = new StringBuffer();
+
 		sb.append("Pedido número: ");
 		sb.append(this.getId());
 		sb.append(" ,Instante: ");
@@ -150,9 +149,6 @@ public class Order implements Serializable {
 		sb.append("Valor total: ");
 		sb.append(nf.format(this.getTotalAmount()));
 
-
-//		sb.append("id=").append(id);
-//		sb.append('}');
 		return sb.toString();
 	}
 }

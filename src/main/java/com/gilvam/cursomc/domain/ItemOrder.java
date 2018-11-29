@@ -101,9 +101,7 @@ public class ItemOrder implements Serializable {
     @Override
     public String toString() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-        final StringBuffer sb =
-//                new StringBuffer("ItemOrder{");
-                new StringBuffer();
+        final StringBuffer sb = new StringBuffer();
 
         sb.append(this.getProduct().getName());
         sb.append(" , Qte: ");
@@ -114,9 +112,6 @@ public class ItemOrder implements Serializable {
         sb.append(nf.format(this.getSubTotal()));
         sb.append("\n");
 
-//        sb.append("amount=").append(amount);
-//        sb.append(", price=").append(price);
-//        sb.append('}');
         return sb.toString();
     }
 }
