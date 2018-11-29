@@ -1,6 +1,8 @@
 package com.gilvam.cursomc.config;
 
 import com.gilvam.cursomc.services.DBService;
+import com.gilvam.cursomc.services.EmailService;
+import com.gilvam.cursomc.services.SmtpEmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,5 +30,10 @@ public class DevConfig {
         this.dbService.instantiateTestDatabase();
 
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new SmtpEmailService();
     }
 }
