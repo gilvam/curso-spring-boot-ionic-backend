@@ -4,10 +4,7 @@ import com.gilvam.cursomc.domain.ItemOrder;
 import com.gilvam.cursomc.domain.Order;
 import com.gilvam.cursomc.domain.PaymentBankSlip;
 import com.gilvam.cursomc.enums.PaymentStatus;
-import com.gilvam.cursomc.repositories.ItemOrderRepository;
-import com.gilvam.cursomc.repositories.OrderRepository;
-import com.gilvam.cursomc.repositories.PaymentRepository;
-import com.gilvam.cursomc.repositories.ProductRepository;
+import com.gilvam.cursomc.repositories.*;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,13 +26,13 @@ public class OrderService {
 	private PaymentRepository paymentRepository;
 
 	@Autowired
-	private ProductRepository productRepository;
-
-	@Autowired
 	private ProductService productService;
 
 	@Autowired
 	private ItemOrderRepository itemOrderRepository;
+
+	@Autowired
+	private ClientService clientService;
 
 	public Order find(Integer id) {
 		Optional<Order> opt = this.repo.findById(id);
@@ -47,6 +44,7 @@ public class OrderService {
 	public Order insert(Order order){
 		order.setId(null);
 		order.setInstante(new Date());
+		order.setClient(this.clientService.find(order.getClient().getId()));
 		order.getPayment().setStatus(PaymentStatus.PENDING);;
 		order.getPayment().setOrder(order);
 
@@ -60,10 +58,14 @@ public class OrderService {
 
 		for (ItemOrder io: order.getItens()){
 			io.setDiscount(0.0);
-			io.setPrice( this.productService.find(io.getProduct().getId()).getValue());
+			io.setProduct(this.productService.find(io.getProduct().getId()));
+			io.setPrice(io.getProduct().getValue());
 			io.setOrder(order);
 		}
 		this.itemOrderRepository.saveAll(order.getItens());
+
+		System.out.println(order);
+
 		return order;
 	}
 }
