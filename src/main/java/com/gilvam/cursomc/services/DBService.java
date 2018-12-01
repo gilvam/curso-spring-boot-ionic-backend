@@ -2,6 +2,7 @@ package com.gilvam.cursomc.services;
 
 import com.gilvam.cursomc.domain.*;
 import com.gilvam.cursomc.enums.PaymentStatus;
+import com.gilvam.cursomc.enums.Profile;
 import com.gilvam.cursomc.enums.TypeClient;
 import com.gilvam.cursomc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,16 +94,22 @@ public class DBService {
         this.stateRepository.saveAll(Arrays.asList(est1, est2));
         this.cityRepository.saveAll(Arrays.asList(c1, c2, c3));
 
-        Client cli1 = new Client(null, "Maria Silva", "geeddiill@gmail.com", "36378912377", TypeClient.PERSONINDIVIDUAL, pe.encode("123"));
-
+        Client cli1 = new Client(null, "Maria Silva", "geeddiill@gmail.com2", "36378912377", TypeClient.PERSONINDIVIDUAL, pe.encode("123"));
         cli1.getPhones().addAll(Arrays.asList("27363323", "93838393"));
+
         Address e1 = new Address(null, "Rua Flores", 300, "Apto 303", "Jardim", "38220834", cli1, c1);
         Address e2 = new Address(null, "Avenida Matos", 105, "Sala 800", "Centro", "38777012", cli1, c2);
-
         cli1.getAddresses().addAll(Arrays.asList(e1, e2));
 
-        this.clientRepository.saveAll(Arrays.asList(cli1));
-        this.addressRepository.saveAll(Arrays.asList(e1, e2));
+        Client cli2 = new Client(null, "Ana Costa", "geeddiill@gmail.com", "37833721786", TypeClient.PERSONINDIVIDUAL, pe.encode("123"));
+        cli2.addProfile(Profile.ADMIN);
+        cli2.getPhones().addAll(Arrays.asList("23495812", "59472019"));
+
+        Address e3 = new Address(null, "Avenia Floriano", 2106, null, "centro", "48493430", cli2, c2);
+        cli2.getAddresses().addAll(Arrays.asList(e3));
+
+        this.clientRepository.saveAll(Arrays.asList(cli1, cli2));
+        this.addressRepository.saveAll(Arrays.asList(e1, e2, e3));
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 

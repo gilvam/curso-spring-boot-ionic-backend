@@ -28,13 +28,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     };
 
     private static final String[] PUBLIC_MATCHERS_GET = {
-            "/produtos/**",
-            "/categorias/**",
-            "/estados/**"
+            "/products/**",
+            "/categories/**",
+            "/clients/**"
     };
 
     private static final String[] PUBLIC_MATCHERS_POST = {
-            "/clientes",
+            "/clients",
             "/auth/forgot/**"
     };
 
@@ -79,5 +79,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-//    Field pe in com.gilvam.cursomc.services.DBService required a bean of type 'org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder' that could not be found.
 }

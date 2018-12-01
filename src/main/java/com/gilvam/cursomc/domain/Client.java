@@ -1,6 +1,7 @@
 package com.gilvam.cursomc.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.gilvam.cursomc.enums.Profile;
 import com.gilvam.cursomc.enums.TypeClient;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -37,11 +39,16 @@ public class Client implements Serializable {
 	@CollectionTable(name="PHONE")
 	private Set<String> phones = new HashSet<>();
 
+	@ElementCollection(fetch=FetchType.EAGER) //sempre carregar junto com a o client
+	@CollectionTable(name="PROFILES")
+	private Set<Integer> profiles = new HashSet<>();
+
 	@JsonIgnore
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 
 	public Client() {
+		this.addProfile(Profile.CLIENT); //recebe perfil CLIENT por padrão
 	}
 
 	public Client(Integer id, String name, String email, String cpfOrCnpj, TypeClient type, String password) {
@@ -52,6 +59,7 @@ public class Client implements Serializable {
 		this.cpfOrCnpj = cpfOrCnpj;
 		this.type = (type == null) ? null : type.getCod();
 		this.password = password;
+		this.addProfile(Profile.CLIENT); //recebe perfil CLIENT por padrão
 	}
 
 	public Integer getId() {
@@ -116,6 +124,14 @@ public class Client implements Serializable {
 
 	public void setPhones(Set<String> phones) {
 		this.phones = phones;
+	}
+
+	public Set<Profile> getProfiles() {
+		return profiles.stream().map(item -> Profile.toEnum(item)).collect(Collectors.toSet());
+	}
+
+	public void addProfile(Profile profile) {
+		profiles.add(profile.getCod());
 	}
 
 	public List<Order> getOrders() {
