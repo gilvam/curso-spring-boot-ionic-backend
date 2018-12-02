@@ -1,5 +1,6 @@
 package com.gilvam.cursomc.resources.exception;
 
+import com.gilvam.cursomc.services.exceptions.AuthorizationException;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -33,5 +34,12 @@ public class ResourceExceptionHandler {
 			err.addError(x.getField(), x.getDefaultMessage());
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e, HttpServletRequest request) {
+
+		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(), e.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
 	}
 }

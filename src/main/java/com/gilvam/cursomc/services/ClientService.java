@@ -5,9 +5,12 @@ import com.gilvam.cursomc.domain.City;
 import com.gilvam.cursomc.domain.Client;
 import com.gilvam.cursomc.dto.ClientDTO;
 import com.gilvam.cursomc.dto.ClientNewDTO;
+import com.gilvam.cursomc.enums.Profile;
 import com.gilvam.cursomc.enums.TypeClient;
 import com.gilvam.cursomc.repositories.AddressRepository;
 import com.gilvam.cursomc.repositories.ClientRepository;
+import com.gilvam.cursomc.security.UserSpringSecurity;
+import com.gilvam.cursomc.services.exceptions.AuthorizationException;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +38,19 @@ public class ClientService {
     private BCryptPasswordEncoder pe;
 
     public Client find(Integer id) {
-        Optional<Client> opt = this.repo.findById(id);
-        return opt.orElseThrow(() -> new ObjectNotFoundException(
-                "Object not found! Id: " + id + ", Type: " + Client.class.getName()));
+
+        UserSpringSecurity user = UserService.authenticated();
+        if (user==null || !user.hasRole(Profile.ADMIN) && !id.equals(user.getId())) {
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Client obj = repo.findById(id).orElse(null);
+
+        if (obj == null) {
+            throw new ObjectNotFoundException("Objeto não encontrado! Id: " + id
+                    + ", Tipo: " + Client.class.getName());
+        }
+        return obj;
     }
 
     @Transactional // garante que vai salvar tanto os clientes quanto os endereços na mesma transação no banco de dados
