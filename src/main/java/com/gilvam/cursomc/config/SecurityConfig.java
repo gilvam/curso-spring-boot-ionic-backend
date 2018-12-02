@@ -1,8 +1,10 @@
 package com.gilvam.cursomc.config;
 
 import com.gilvam.cursomc.security.JWTAuthenticationFilter;
+import com.gilvam.cursomc.security.JWTAuthorizationFilter;
 import com.gilvam.cursomc.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -24,6 +26,8 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    @Qualifier("userDetailServiceImpl")
     @Autowired
     UserDetailsService userDetailsService;
 
@@ -67,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated(); // para todo o restante, é necessário estar autenticado
 
         http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil));
+        http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // assegura que o back-end não criará seção de usuário
     }
 

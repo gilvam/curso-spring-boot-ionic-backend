@@ -68,7 +68,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             response.setStatus(401);
             response.setContentType("application/json");
             response.getWriter().append(json());
-        }   
+        }
 
         private String json() {
             long date = new Date().getTime();
