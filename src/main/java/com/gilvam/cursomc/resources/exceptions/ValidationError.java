@@ -1,6 +1,5 @@
-package com.gilvam.cursomc.resources.exception;
+package com.gilvam.cursomc.resources.exceptions;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

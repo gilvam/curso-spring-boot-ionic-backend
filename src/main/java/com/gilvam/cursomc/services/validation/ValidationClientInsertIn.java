@@ -4,7 +4,7 @@ import com.gilvam.cursomc.domain.Client;
 import com.gilvam.cursomc.dto.ClientNewDTO;
 import com.gilvam.cursomc.enums.TypeClient;
 import com.gilvam.cursomc.repositories.ClientRepository;
-import com.gilvam.cursomc.resources.exception.FieldMessage;
+import com.gilvam.cursomc.resources.exceptions.FieldMessage;
 import com.gilvam.cursomc.services.validation.utils.BR;
 import org.springframework.beans.factory.annotation.Autowired;
 

@@ -3,7 +3,7 @@ package com.gilvam.cursomc.services.validation;
 import com.gilvam.cursomc.domain.Client;
 import com.gilvam.cursomc.dto.ClientDTO;
 import com.gilvam.cursomc.repositories.ClientRepository;
-import com.gilvam.cursomc.resources.exception.FieldMessage;
+import com.gilvam.cursomc.resources.exceptions.FieldMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerMapping;
 
