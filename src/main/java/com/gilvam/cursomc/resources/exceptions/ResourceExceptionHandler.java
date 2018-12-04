@@ -5,6 +5,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.gilvam.cursomc.services.exceptions.AuthorizationException;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
+import com.gilvam.cursomc.services.exceptions.FileException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

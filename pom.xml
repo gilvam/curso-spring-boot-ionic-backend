@@ -95,6 +95,7 @@
 			<version>LATEST</version>
 		</dependency>
 
+		<!--imagem-->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

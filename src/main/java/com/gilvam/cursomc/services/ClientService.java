@@ -14,6 +14,7 @@ import com.gilvam.cursomc.services.exceptions.AuthorizationException;
 import com.gilvam.cursomc.services.exceptions.DataIntegrityException;
 import com.gilvam.cursomc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 
@@ -41,6 +43,12 @@ public class ClientService {
 
     @Autowired
     private S3Service s3Service;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.client.profile}")
+    private String prefix;
 
     public Client find(Integer id) {
 
@@ -118,17 +126,15 @@ public class ClientService {
     }
 
     public URI uploadProfilePicture(MultipartFile multipartFile) {
+
         UserSpringSecurity user = UserService.authenticated();
         if (user == null) {
             throw new AuthorizationException("Acesso negado");
         }
 
-        URI uri = this.s3Service.uploadFile(multipartFile);
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        String fileName = prefix + user.getId() + ".jpg";
 
-        Client client = this.repo.findById(user.getId()).orElseThrow();
-        client.setImageUrl(uri.toString());
-        repo.save(client);
-
-        return uri;
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
     }
 }

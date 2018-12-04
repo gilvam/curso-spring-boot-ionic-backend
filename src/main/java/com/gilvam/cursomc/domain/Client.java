@@ -47,8 +47,6 @@ public class Client implements Serializable {
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 
-	private String imageUrl;
-
 	public Client() {
 		this.addProfile(Profile.CLIENT); //recebe perfil CLIENT por padrão
 	}
@@ -142,13 +140,6 @@ public class Client implements Serializable {
 
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 	@Override

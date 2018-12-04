@@ -1,4 +1,4 @@
-package com.gilvam.cursomc.resources.exceptions;
+package com.gilvam.cursomc.services.exceptions;
 
 public class FileException extends RuntimeException {
     private static final long serialVersionUID = 1L;
